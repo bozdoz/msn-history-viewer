@@ -75,7 +75,7 @@ const DragAndDrop = ({
 				reader.readAsText(file);
 
 				reader.onload = function () {
-					// TODO successful onDrop should wipe hash (not querystring)
+					location.hash = "";
 					onChange(reader.result);
 					onLoading(false);
 				};
