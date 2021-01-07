@@ -1,0 +1,63 @@
+{
+  "name": "msn-history-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A viewer for old MSN Messenger history xml files, written in React",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run watch",
+    "build": "npm-run-all -p build:*",
+    "build:css": "sass src/css/style.scss --style=compressed | postcss -u autoprefixer -o build/css/style.css --no-map",
+    "build:js": "NODE_ENV=production rollup -c",
+    "watch": "npm-run-all -p watch:*",
+    "watch:css": "sass src/css/style.scss build/css/style.css --watch",
+    "watch:js": "rollup -c -w",
+    "watch:proxy": "browser-sync start --config bs-config.js",
+    "lint": "eslint . --cache --fix",
+    "pretest": "npm run lint"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.12",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": ">=4",
+    "lint-staged": ">=10",
+    "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@rollup/plugin-replace": "^2.3.4",
+    "autoprefixer": "^9.8.6",
+    "babel": "^6.23.0",
+    "babel-eslint": "^10.1.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "rollup": "^2.26.11",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.26.10",
+    "styled-components": "^5.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,css,md}": "prettier --write",
+    "*.{js,jsx}": "eslint --cache --fix"
+  }
+}

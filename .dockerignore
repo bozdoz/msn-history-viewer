@@ -1,0 +1,23 @@
+.eslintcache
+node_modules/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.log
+package-lock.json
+
+build/
+private/
+.env
+
+# ignore yourself
+.dockerignore
+.editorconfig
+.eslint*
+.gitignore
+bs-config.js
+docker-compose.yml
+Dockerfile

@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  msn:
+    build: .
+    ports:
+      - ${PORT:-8080}:80
+    restart: always
+    volumes:
+      - ./private:/usr/share/nginx/html/private
