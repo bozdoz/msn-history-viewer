@@ -5,6 +5,7 @@ const DropZone = styled.div`
 	min-height: 100%;
 	width: 100%;
 	transition: background 0.3s;
+	text-align: center;
 
 	${({ noChildren }) =>
 		noChildren &&
