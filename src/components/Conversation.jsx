@@ -4,9 +4,10 @@ import formatDate from "../utils/formatDate";
 import Header from "./Header";
 
 const StyledConversation = styled.div`
-	padding-left: 1em;
 	padding-top: 15vh;
 	padding-bottom: 61.8vh;
+	padding-left: 1em;
+	padding-right: 1em;
 	max-width: 600px;
 	margin: 0 auto;
 
