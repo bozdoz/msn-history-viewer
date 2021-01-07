@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 
 services:
   msn:
@@ -7,4 +7,4 @@ services:
       - ${PORT:-8080}:80
     restart: always
     volumes:
-      - ./private:/usr/share/nginx/html/private
+      - ./private:/usr/share/nginx/html/private:ro
