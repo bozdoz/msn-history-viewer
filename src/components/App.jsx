@@ -36,6 +36,8 @@ const App = () => {
 			return;
 		}
 
+		window.gtag("event", "query-id", { id });
+
 		const path = `/private/${id}.xml`;
 		setIsLoading(true);
 		loadXML(path)
@@ -43,6 +45,8 @@ const App = () => {
 			.catch(() => {
 				// path doesn't exist
 				setIsLoading(false);
+
+				window.gtag("event", "query-id-failed", { id });
 			});
 	}, [id, onXMLChange]);
 

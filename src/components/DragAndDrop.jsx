@@ -74,6 +74,8 @@ const DragAndDrop = ({
 
 				reader.readAsText(file);
 
+				window.gtag("event", "file-drop");
+
 				reader.onload = function () {
 					location.hash = "";
 					onChange(reader.result);
@@ -83,6 +85,8 @@ const DragAndDrop = ({
 				reader.onerror = function () {
 					// eslint-disable-next-line no-console
 					console.error(reader.error);
+					// TODO: add sentry?
+					window.gtag("event", "file-drop-fail", { file });
 					onLoading(false);
 				};
 			} else {
