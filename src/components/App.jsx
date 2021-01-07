@@ -11,7 +11,6 @@ const App = () => {
 	// TODO save to/configure local storage
 	const { id } = getQueryString();
 	const [isLoading, setIsLoading] = React.useState(false);
-	// TODO when data changes, check for hash and try scroll to
 	const [data, setData] = React.useState(null);
 	const onXMLChange = React.useCallback(
 		(xml) => {
@@ -21,6 +20,12 @@ const App = () => {
 				const parsed = parseXML(xml);
 				setData(parsed);
 				setIsLoading(false);
+
+				if (location.hash) {
+					// resets hash and causes scrollTo element
+					// eslint-disable-next-line no-self-assign
+					location.hash = location.hash;
+				}
 			}, 0);
 		},
 		[setIsLoading, setData]
