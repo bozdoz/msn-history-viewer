@@ -10,6 +10,7 @@ const StyledConversation = styled.div`
 	padding-right: 1em;
 	max-width: 600px;
 	margin: 0 auto;
+	text-align: left;
 
 	*::selection {
 		background: #ff0;
