@@ -40,6 +40,8 @@ const App = () => {
 						mainTag,
 					});
 					Sentry.captureMessage("Unusual data");
+
+					window.gtag("event", "unusual_data");
 				}
 
 				setIsLoading(false);
