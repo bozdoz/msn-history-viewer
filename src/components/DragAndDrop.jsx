@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as Sentry from "@sentry/react";
 import styled, { css } from "styled-components";
 
 const DropZone = styled.div`
@@ -75,7 +76,7 @@ const DragAndDrop = ({
 
 				reader.readAsText(file);
 
-				window.gtag("event", "file-drop");
+				window.gtag("event", "file_drop");
 
 				reader.onload = function () {
 					location.hash = "";
@@ -86,9 +87,15 @@ const DragAndDrop = ({
 				reader.onerror = function () {
 					// eslint-disable-next-line no-console
 					console.error(reader.error);
-					// TODO: add sentry?
-					window.gtag("event", "file-drop-fail", { file });
 					onLoading(false);
+
+					window.gtag("event", "file_drop_fail", { file });
+
+					Sentry.setExtras({
+						file,
+					});
+
+					Sentry.captureException(reader.error);
 				};
 			} else {
 				onLoading(false);

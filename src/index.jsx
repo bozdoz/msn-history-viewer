@@ -21,7 +21,7 @@ window.addEventListener("hashchange", () => {
 	const { hash } = window.location;
 
 	if (hash) {
-		window.gtag("event", "hash-change", { hash });
+		window.gtag("event", "hash_change", { hash });
 	}
 });
 

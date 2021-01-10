@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as Sentry from "@sentry/react";
 import { parseXML, loadXML } from "../utils/loadXML";
 import Conversation from "./Conversation";
 import DragAndDrop from "./DragAndDrop";
@@ -18,14 +19,30 @@ const App = () => {
 
 			setTimeout(() => {
 				const parsed = parseXML(xml);
-				setData(parsed);
-				setIsLoading(false);
 
-				if (location.hash) {
-					// resets hash and causes scrollTo element
-					// eslint-disable-next-line no-self-assign
-					location.hash = location.hash;
+				// set data if we know we can parse it:
+				const mainTag = (parsed && parsed.children[0]) || null;
+
+				if (mainTag && mainTag.tagName === "Log") {
+					setData(mainTag);
+
+					if (location.hash) {
+						// resets hash and causes scrollTo element
+						// eslint-disable-next-line no-self-assign
+						location.hash = location.hash;
+					}
+				} else {
+					// eslint-disable-next-line no-console
+					console.error("This file is unlikely to be parsed properly");
+					setData(mainTag);
+
+					Sentry.setExtras({
+						mainTag,
+					});
+					Sentry.captureMessage("Unusual data");
 				}
+
+				setIsLoading(false);
 			}, 0);
 		},
 		[setIsLoading, setData]
@@ -36,7 +53,7 @@ const App = () => {
 			return;
 		}
 
-		window.gtag("event", "query-id", { id });
+		window.gtag("event", "query_id", { id });
 
 		const path = `/private/${id}.xml`;
 		setIsLoading(true);
@@ -46,21 +63,23 @@ const App = () => {
 				// path doesn't exist
 				setIsLoading(false);
 
-				window.gtag("event", "query-id-failed", { id });
+				window.gtag("event", "query_id_failed", { id });
 			});
 	}, [id, onXMLChange]);
 
-	const log = data && data.children[0];
-
-	// TODO: failed state/undo
+	// TODO: failed state component
+	// TODO: undo or go back to previous conversation? (would require storage I'm guessing)
+	// TODO: Table of Contents (dates)
 	return (
-		<DragAndDrop
-			onChange={onXMLChange}
-			isLoading={isLoading}
-			onLoading={setIsLoading}
-		>
-			{log && log.tagName === "Log" && <Conversation node={log} />}
-		</DragAndDrop>
+		<Sentry.ErrorBoundary showDialog>
+			<DragAndDrop
+				onChange={onXMLChange}
+				isLoading={isLoading}
+				onLoading={setIsLoading}
+			>
+				{data && <Conversation node={data} />}
+			</DragAndDrop>
+		</Sentry.ErrorBoundary>
 	);
 };
 
