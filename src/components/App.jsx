@@ -26,10 +26,12 @@ const App = () => {
 				if (mainTag && mainTag.tagName === "Log") {
 					setData(mainTag);
 
-					if (location.hash) {
-						// resets hash and causes scrollTo element
-						// eslint-disable-next-line no-self-assign
-						location.hash = location.hash;
+					const newHash = location.hash;
+					if (newHash) {
+						// cause scrollTo element
+						setTimeout(() => {
+							document.querySelector(newHash)?.scrollIntoView();
+						}, 300);
 					}
 				} else {
 					// eslint-disable-next-line no-console
