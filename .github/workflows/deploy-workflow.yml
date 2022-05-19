@@ -1,0 +1,28 @@
+name: DeployWorkflow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "Dockerfile"
+      - "docker-compose.yml"
+      - "package*"
+      - "yarn.lock"
+      - "rollup.config.js"
+
+jobs:
+  deploy:
+    if: ${{ !contains(github.event.commits[0].message, 'NO_DEPLOY') }}
+    container: 
+      image: bozdoz/fabric-deployment
+      env:
+        CWD: ${{ secrets.CWD }}
+        HOST: ${{ secrets.HOST }}
+        PORT: ${{ secrets.PORT }}
+        USER: ${{ secrets.USER }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: fab gitpull dockercomposebuild
