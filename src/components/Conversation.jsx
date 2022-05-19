@@ -29,12 +29,14 @@ const Message = styled.div`
 		`}
 `;
 
-const From = styled.div`
+const From = styled.a`
+	display: block;
 	margin-top: 0.4em;
 	margin-bottom: 0.4em;
 	color: #999;
 	font-weight: lighter;
 	font-family: sans-serif;
+	text-decoration: none;
 `;
 
 /**
@@ -56,10 +58,10 @@ const Conversation = ({ node }) => {
 			{Array.from(children).map((child, i) => {
 				const from = child.querySelector("User").getAttribute("FriendlyName");
 				const style = child.querySelector("Text").getAttribute("Style");
-				const formattedDate = formatDate(
-					new Date(child.getAttribute("DateTime"))
-				);
+				const dateTime = new Date(child.getAttribute("DateTime"));
+				const formattedDate = formatDate(dateTime);
 				const date = child.getAttribute("Date");
+				const dtString = dateTime.valueOf().toString();
 
 				const newFrom = from !== lastFrom;
 				const newDate = date !== lastDate;
@@ -69,8 +71,12 @@ const Conversation = ({ node }) => {
 
 				return (
 					<React.Fragment key={i}>
-						{newDate && <Header>{formattedDate}</Header>}
-						{newFrom && <From title={formattedDate}>{from} says:</From>}
+						{newDate && <Header id={dtString}>{formattedDate}</Header>}
+						{newFrom && (
+							<From id={dtString} href={`#${dtString}`} title={formattedDate}>
+								{from} says:
+							</From>
+						)}
 						<Message extraCSS={style} title={formattedDate}>
 							{child.textContent}
 						</Message>

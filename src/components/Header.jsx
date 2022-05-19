@@ -44,9 +44,9 @@ const Level = ({ Elem = "h2", children, ...props }) => {
 /**
  * Render a linkable header with optional Elem prop (h1, h2, h3, etc)
  */
-const Header = ({ children, ...props }) => {
+const Header = ({ children, id, ...props }) => {
 	const text = Array.isArray(children) ? children.join("") : children;
-	const unique = text.replace(/[\W]+/g, "-");
+	const unique = (id || text).replace(/[\W]+/g, "-");
 
 	const content = props.Elem === "h1" ? text : `—${text}—`;
 
