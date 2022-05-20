@@ -1,6 +1,7 @@
-import * as React from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import formatDate from "../utils/formatDate";
+import ColorPicker from "./ColorPicker";
 import Header from "./Header";
 
 const StyledConversation = styled.div`
@@ -39,6 +40,8 @@ const From = styled.a`
 	text-decoration: none;
 `;
 
+const colorRegex = /color:(.*?);/g;
+
 /**
  * Renders a conversation from an MSN history XML file
  */
@@ -57,7 +60,10 @@ const Conversation = ({ node }) => {
 			{members.length > 0 && <Header Elem="h1">{members.join(" & ")}</Header>}
 			{Array.from(children).map((child, i) => {
 				const from = child.querySelector("User").getAttribute("FriendlyName");
-				const style = child.querySelector("Text").getAttribute("Style");
+				const style = child
+					.querySelector("Text")
+					.getAttribute("Style")
+					.replace(colorRegex, "color:var(--message,$1);");
 				const dateTime = new Date(child.getAttribute("DateTime"));
 				const formattedDate = formatDate(dateTime);
 				const date = child.getAttribute("Date");
@@ -83,6 +89,7 @@ const Conversation = ({ node }) => {
 					</React.Fragment>
 				);
 			})}
+			<ColorPicker />
 		</StyledConversation>
 	);
 };

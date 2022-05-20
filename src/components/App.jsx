@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as Sentry from "@sentry/react";
 import { parseXML, loadXML } from "../utils/loadXML";
 import Conversation from "./Conversation";
@@ -11,9 +11,9 @@ import getQueryString from "../utils/getQueryString";
 const App = () => {
 	// TODO save to/configure local storage
 	const { id } = getQueryString();
-	const [isLoading, setIsLoading] = React.useState(false);
-	const [data, setData] = React.useState(null);
-	const onXMLChange = React.useCallback(
+	const [isLoading, setIsLoading] = useState(false);
+	const [data, setData] = useState(null);
+	const onXMLChange = useCallback(
 		(xml) => {
 			setIsLoading(true);
 
@@ -52,7 +52,7 @@ const App = () => {
 		[setIsLoading, setData]
 	);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!id) {
 			return;
 		}
