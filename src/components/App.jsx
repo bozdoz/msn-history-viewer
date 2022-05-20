@@ -25,14 +25,6 @@ const App = () => {
 
 				if (mainTag && mainTag.tagName === "Log") {
 					setData(mainTag);
-
-					const newHash = location.hash;
-					if (newHash) {
-						// cause scrollTo element
-						setTimeout(() => {
-							document.querySelector(newHash)?.scrollIntoView();
-						}, 300);
-					}
 				} else {
 					// eslint-disable-next-line no-console
 					console.error("This file is unlikely to be parsed properly");
@@ -47,6 +39,14 @@ const App = () => {
 				}
 
 				setIsLoading(false);
+
+				const newHash = location.hash;
+				if (newHash) {
+					// cause scrollTo element
+					setTimeout(() => {
+						document.querySelector(newHash)?.scrollIntoView();
+					}, 500);
+				}
 			}, 0);
 		},
 		[setIsLoading, setData]
