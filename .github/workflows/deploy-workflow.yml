@@ -26,3 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: fab gitpull dockercomposebuild
+      - run: apk add curl
+      - run: |
+          curl "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE }}/purge_cache" \
+          -H "Authorization: Bearer ${{ secrets.CF_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d "{\"purge_everything\": true}"
