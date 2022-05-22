@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from "react";
 import * as Sentry from "@sentry/react";
 import { parseXML, loadXML } from "../utils/loadXML";
@@ -42,8 +43,14 @@ const App = () => {
 
 				const newHash = location.hash;
 				if (newHash) {
+					console.log({ newHash });
 					// cause scrollTo element
 					setTimeout(() => {
+						console.log(
+							"scrolling to",
+							newHash,
+							document.querySelector(newHash)
+						);
 						document.querySelector(newHash)?.scrollIntoView();
 					}, 500);
 				}
