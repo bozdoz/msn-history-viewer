@@ -46,7 +46,7 @@ const App = () => {
 					// cause scrollTo element
 					setTimeout(() => {
 						document.getElementById(newHash)?.scrollIntoView();
-					}, 500);
+					}, 200);
 				}
 			}, 0);
 		},
