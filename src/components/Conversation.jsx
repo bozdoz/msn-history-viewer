@@ -60,10 +60,11 @@ const Conversation = ({ node }) => {
 			{members.length > 0 && <Header Elem="h1">{members.join(" & ")}</Header>}
 			{Array.from(children).map((child, i) => {
 				const from = child.querySelector("User").getAttribute("FriendlyName");
+				/** @type string | undefined */
 				const style = child
 					.querySelector("Text")
-					.getAttribute("Style")
-					.replace(colorRegex, "color:var(--message,$1);");
+					?.getAttribute("Style")
+					?.replace(colorRegex, "color:var(--message,$1);");
 				const dateTime = new Date(child.getAttribute("DateTime"));
 				const formattedDate = formatDate(dateTime);
 				const date = child.getAttribute("Date");
